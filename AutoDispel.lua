@@ -29,22 +29,22 @@ local run = false
 
 local start = function()
     run = true
-    windower.add_to_chat(2, 'Starting AutoDispel')
-    windower.add_to_chat(7, '------------------------------------')
-    windower.add_to_chat(7, 'Exec Delay: ' .. settings.ExecDelay)
-    windower.add_to_chat(7, 'Do Command: ' .. do_command)
+    notice('Starting AutoDispel')
+    notice('------------------------------------')
+    notice('Exec Delay: ' .. settings.ExecDelay)
+    notice('Do Command: ' .. do_command)
     if type(settings.WatchFor) == 'table' then
-        windower.add_to_chat(4, 'WatchFor items:')
+        notice('WatchFor items:')
         for i, item in ipairs(settings.WatchFor) do
-            windower.add_to_chat(4, string.format('  %d: %s', i, item))
+            notice(string.format('  %d: %s', i, item))
         end
     end
-    windower.add_to_chat(7, '------------------------------------')
+    notice('------------------------------------')
 end
 
 local stop = function()
     run = false
-    windower.add_to_chat(2, 'AutoDispel stopped')
+    notice('AutoDispel stopped')
 end
 
 -- Convert settings.WatchFor to a table if it's a string
@@ -81,7 +81,7 @@ windower.register_event('incoming text', function(original, modified)
         -- Match the exact phrase
         local pattern = condition:lower()
         if trimmed_message:lower():match(pattern) then
-            windower.add_to_chat(3, 'AutoDispel executing...')
+            notice('AutoDispel executing...')
             execute_command:schedule(settings.ExecDelay)
             break -- Exit the loop once we find a match
         end
@@ -96,11 +96,11 @@ windower.register_event('addon command', function(command)
     elseif command == 'stop' then
         stop()
     elseif command == 'help' then
-        windower.add_to_chat(17, 'AutoDispel  v' .. _addon.version .. ' commands:')
-        windower.add_to_chat(17, '//adisp [options]')
-        windower.add_to_chat(17, '    start      - Starts auto dispel')
-        windower.add_to_chat(17, '    stop       - Stops auto dispel')
-        windower.add_to_chat(17, '    help       - Displays this help text')
+        notice('AutoDispel  v' .. _addon.version .. ' commands:')
+        notice('//adisp [options]')
+        notice('    start      - Starts auto dispel')
+        notice('    stop       - Stops auto dispel')
+        notice('    help       - Displays this help text')
     end
 end)
 
